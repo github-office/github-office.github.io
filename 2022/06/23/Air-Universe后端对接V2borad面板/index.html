@@ -16,20 +16,13 @@
   <meta name="author" content="GitHub-office">
   <meta name="keywords" content="">
   
-    <meta name="description" content="手头的机器比较多，除了正产建站之外，也顺便搭建了节点，节点多了不好管理，所以想搭建个机场面板管理自己的节点。本文为小白学习笔记，大佬轻喷。 本文要实现的效果如下：Air-Universe后端对接V2borad面板，实现Xray+vmess+TLS+WS，宝塔面板安装Nginx处理TLS，伪装站也通过宝塔面板搭建，全程可视化操作，降低安装和维护门槛，443端口实现后端节点与网站共存。  优势是： N">
+    <meta name="description" content="手头的机器比较多，除了正产建站之外，也顺便搭建了节点，节点多了不好管理，所以想搭建个机场面板管理自己的节点。本文为小白学习笔记，大佬轻喷。 本文要实现的效果:Air-Universe后端对接V2borad面板，实现Xray+vmess+TLS+WS，宝塔面板安装Nginx处理TLS，伪装站也通过宝塔面板搭建，全程可视化操作，降低安装和维护门槛，443端口实现后端节点与网站共存。  优势是： Ngi">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Air-Universe后端对接V2borad面板">
 <meta property="og:url" content="http://example.com/2022/06/23/Air-Universe%E5%90%8E%E7%AB%AF%E5%AF%B9%E6%8E%A5V2borad%E9%9D%A2%E6%9D%BF/index.html">
 <meta property="og:site_name" content="我的笔记本">
-<meta property="og:description" content="手头的机器比较多，除了正产建站之外，也顺便搭建了节点，节点多了不好管理，所以想搭建个机场面板管理自己的节点。本文为小白学习笔记，大佬轻喷。 本文要实现的效果如下：Air-Universe后端对接V2borad面板，实现Xray+vmess+TLS+WS，宝塔面板安装Nginx处理TLS，伪装站也通过宝塔面板搭建，全程可视化操作，降低安装和维护门槛，443端口实现后端节点与网站共存。  优势是： N">
+<meta property="og:description" content="手头的机器比较多，除了正产建站之外，也顺便搭建了节点，节点多了不好管理，所以想搭建个机场面板管理自己的节点。本文为小白学习笔记，大佬轻喷。 本文要实现的效果:Air-Universe后端对接V2borad面板，实现Xray+vmess+TLS+WS，宝塔面板安装Nginx处理TLS，伪装站也通过宝塔面板搭建，全程可视化操作，降低安装和维护门槛，443端口实现后端节点与网站共存。  优势是： Ngi">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://cdn.jsdelivr.net/gh/github-office/png-hub/img/page1/v2bord%E8%AE%BE%E7%BD%AE-202206231507317.jpeg">
-<meta property="og:image" content="https://raw.githubusercontent.com/github-office/png-hub/main/img/%E8%84%9A%E6%9C%AC%E5%9B%BE1.jpg">
-<meta property="og:image" content="https://cdn.jsdelivr.net/gh/github-office/png-hub/img/page1/2%E5%BC%80%E5%90%AFbbr202206231018487.jpg">
-<meta property="og:image" content="https://cdn.jsdelivr.net/gh/github-office/png-hub/img/page1/3%E6%A3%80%E6%B5%8B%E6%98%AF%E5%90%A6%E5%BC%80%E5%90%AFbbr202206231019069.jpg">
-<meta property="og:image" content="https://cdn.jsdelivr.net/gh/github-office/png-hub/img/page1/%E8%AF%81%E4%B9%A6%E7%94%B3%E8%AF%B7-202206231913912.jpg">
-<meta property="og:image" content="https://cdn.jsdelivr.net/gh/github-office/png-hub/img/page1/3%E6%A3%80%E6%B5%8B%E6%98%AF%E5%90%A6%E5%BC%80%E5%90%AFbbr202206231019069.jpg">
-<meta property="og:image" content="https://cdn.jsdelivr.net/gh/github-office/png-hub/img/page1/%E8%AF%81%E4%B9%A6%E7%94%B3%E8%AF%B7-202206231913912.jpg">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/github-office/png-hub/img/page1/v2bord%E8%AE%BE%E7%BD%AE-202206231507317.jpeg">
 <meta property="og:image" content="https://raw.githubusercontent.com/github-office/png-hub/main/img/%E8%84%9A%E6%9C%AC%E5%9B%BE1.jpg">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/github-office/png-hub/img/page1/2%E5%BC%80%E5%90%AFbbr202206231018487.jpg">
@@ -47,7 +40,7 @@
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/github-office/png-hub/img/page1/%E4%B8%8B%E8%BD%BD%E4%BA%86%E4%BC%AA%E8%A3%85%E7%BD%91%E7%AB%99202206231959713.png">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/github-office/png-hub/img/page1/%E5%89%AA%E8%B4%B4202206232001703.png">
 <meta property="article:published_time" content="2022-06-23T12:10:00.000Z">
-<meta property="article:modified_time" content="2022-06-23T12:16:49.693Z">
+<meta property="article:modified_time" content="2022-06-23T12:23:36.078Z">
 <meta property="article:author" content="GitHub-office">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/github-office/png-hub/img/page1/v2bord%E8%AE%BE%E7%BD%AE-202206231507317.jpeg">
@@ -285,7 +278,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          4.8k 字
+          3.7k 字
         
       </span>
     
@@ -296,7 +289,7 @@
         
         
         
-          40 分钟
+          31 分钟
         
       </span>
     
@@ -340,7 +333,7 @@
               <div class="markdown-body">
                 
                 <p>手头的机器比较多，除了正产建站之外，也顺便搭建了节点，节点多了不好管理，所以想搭建个机场面板管理自己的节点。<strong>本文为小白学习笔记，大佬轻喷。</strong></p>
-<h3 id="本文要实现的效果如下："><a href="#本文要实现的效果如下：" class="headerlink" title="本文要实现的效果如下："></a>本文要实现的效果如下：</h3><p>Air-Universe后端对接V2borad面板，实现Xray+vmess+TLS+WS，宝塔面板安装Nginx处理TLS，伪装站也通过宝塔面板搭建，全程可视化操作，降低安装和维护门槛，443端口实现后端节点与网站共存。</p>
+<h6 id="本文要实现的效果"><a href="#本文要实现的效果" class="headerlink" title="本文要实现的效果:"></a>本文要实现的效果:</h6><p>Air-Universe后端对接V2borad面板，实现Xray+vmess+TLS+WS，宝塔面板安装Nginx处理TLS，伪装站也通过宝塔面板搭建，全程可视化操作，降低安装和维护门槛，443端口实现后端节点与网站共存。</p>
 <hr>
 <h5 id="优势是："><a href="#优势是：" class="headerlink" title="优势是："></a>优势是：</h5><ol>
 <li>Nginx进行TLS加解密，不经Xray内核进行TLS加解密，可能能增加隐蔽性，但是流量大了什么方法都隐藏不住。</li>
@@ -354,34 +347,7 @@
 下图来自网络，有文中有不同之处，请按照文中设置配置节点。<br><img src="https://cdn.jsdelivr.net/gh/github-office/png-hub/img/page1/v2bord%E8%AE%BE%E7%BD%AE-202206231507317.jpeg" srcset="/img/loading.gif" lazyload alt="v2bord设置"></li>
 </ol>
 <hr>
-<h5 id="Air-Universe后端对接V2borad面板："><a href="#Air-Universe后端对接V2borad面板：" class="headerlink" title="Air-Universe后端对接V2borad面板："></a>Air-Universe后端对接V2borad面板：</h5><ol>
-<li>升级内核，开启bbr加速，用下列脚本，选36 <code>5.10LTS</code> 内核。</li>
-</ol>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">wget --no-check-certificate https://raw.githubusercontent.com/jinwyp/one_click_script/master/install_kernel.sh &amp;&amp; <span class="hljs-built_in">chmod</span> +x ./install_kernel.sh &amp;&amp; ./install_kernel.sh<br></code></pre></td></tr></table></figure>
-<p><img src="https://raw.githubusercontent.com/github-office/png-hub/main/img/%E8%84%9A%E6%9C%AC%E5%9B%BE1.jpg" srcset="/img/loading.gif" lazyload></p>
-<p><img src="https://cdn.jsdelivr.net/gh/github-office/png-hub/img/page1/2%E5%BC%80%E5%90%AFbbr202206231018487.jpg" srcset="/img/loading.gif" lazyload></p>
-<ol start="2">
-<li>centoOS内核太老，必须的升级内核，ubuntu20.04自带bbr加速，根据脚本菜单提示，选择2开启bbr加速即可，算法全部默认，根据提示可能需要重启vps。</li>
-</ol>
-<p><img src="https://cdn.jsdelivr.net/gh/github-office/png-hub/img/page1/3%E6%A3%80%E6%B5%8B%E6%98%AF%E5%90%A6%E5%BC%80%E5%90%AFbbr202206231019069.jpg" srcset="/img/loading.gif" lazyload></p>
-<ol start="3">
-<li><p>安装宝塔面板（开启面板SSL更安全，不过小白开启面板SSL之后可能会打不开面板），之后安装Nginx，并且新建一个网站，在宝塔面板中为网站一键申请SSL证书，部署证书并强制开启https。<br><img src="https://cdn.jsdelivr.net/gh/github-office/png-hub/img/page1/%E8%AF%81%E4%B9%A6%E7%94%B3%E8%AF%B7-202206231913912.jpg" srcset="/img/loading.gif" lazyload></p>
-</li>
-<li><p>使用官方推荐的第三放脚本安装Air-Universe后端 ，选择 <code>51</code>，按照提示安装。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">wget --no-check-certificate https://raw.githubusercontent.com/jinwyp/one_click_script/master/linux_install_software.sh &amp;&amp; <span class="hljs-built_in">chmod</span> +x ./linux_install_software.sh &amp;&amp; ./linux_install_software.sh<br></code></pre></td></tr></table></figure>
-</li>
-<li><p>centoOS内核太老，必须的升级内核，ubuntu20.04自带bbr加速，根据脚本菜单提示，选择2开启bbr加速即可，算法全部默认，根据提示可能需要重启vps。</p>
-</li>
-</ol>
-<p><img src="https://cdn.jsdelivr.net/gh/github-office/png-hub/img/page1/3%E6%A3%80%E6%B5%8B%E6%98%AF%E5%90%A6%E5%BC%80%E5%90%AFbbr202206231019069.jpg" srcset="/img/loading.gif" lazyload></p>
-<ol start="3">
-<li>安装宝塔面板（开启面板SSL更安全，不过小白开启面板SSL之后可能会打不开面板），之后安装Nginx，并且新建一个网站，在宝塔面板中为网站一键申请SSL证书，部署证书并强制开启https。<br><img src="https://cdn.jsdelivr.net/gh/github-office/png-hub/img/page1/%E8%AF%81%E4%B9%A6%E7%94%B3%E8%AF%B7-202206231913912.jpg" srcset="/img/loading.gif" lazyload></li>
-<li>使用官方推荐的第三放脚本安装Air-Universe后端 ，选择 <code>51</code>，按照提示安装。<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">wget --no-check-certificate https://raw.githubusercontent.com/jinwyp/one_click_script/master/linux_install_software.sh &amp;&amp; <span class="hljs-built_in">chmod</span> +x ./linux_install_software.sh &amp;&amp; ./linux_install_software.sh<br></code></pre></td></tr></table></figure>
-下图来自网络，有文中有不同之处，请按照文中设置配置节点。<br><img src="https://cdn.jsdelivr.net/gh/github-office/png-hub/img/page1/v2bord%E8%AE%BE%E7%BD%AE-202206231507317.jpeg" srcset="/img/loading.gif" lazyload alt="v2bord设置"><br>​</li>
-</ol>
-<hr>
-<p>​</p>
-<h5 id="Air-Universe后端对接V2borad面板：-1"><a href="#Air-Universe后端对接V2borad面板：-1" class="headerlink" title="Air-Universe后端对接V2borad面板："></a>Air-Universe后端对接V2borad面板：</h5><p>​</p>
+<h5 id="Air-Universe后端对接V2borad面板："><a href="#Air-Universe后端对接V2borad面板：" class="headerlink" title="Air-Universe后端对接V2borad面板："></a>Air-Universe后端对接V2borad面板：</h5><p>​</p>
 <ol>
 <li><p>升级内核，开启bbr加速，用下列脚本，选36 <code>5.10LTS</code> 内核。<br>​</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">wget --no-check-certificate https://raw.githubusercontent.com/jinwyp/one_click_script/master/install_kernel.sh &amp;&amp; <span class="hljs-built_in">chmod</span> +x ./install_kernel.sh &amp;&amp; ./install_kernel.sh<br></code></pre></td></tr></table></figure>
@@ -417,7 +383,7 @@
 <li><p>访问 你的域名&#x2F;china&#x2F;no1 ，如果浏览器显示Bad Request，则说明配置成功<br><img src="https://cdn.jsdelivr.net/gh/github-office/png-hub/img/page1/%E8%BF%94%E5%9B%9E%E9%94%99%E8%AF%AF%E8%AF%B7%E6%B1%82202206231945122.png" srcset="/img/loading.gif" lazyload></p>
 </li>
 <li><p>配置伪装站。此时网站还是宝塔默认的网页，为了让网站看上去更正常一点，可以随便找个网站伪装一下。宝塔面板点击网站根目录，单机全部文件，有个文件删不掉不用管。<br><img src="https://cdn.jsdelivr.net/gh/github-office/png-hub/img/page1/%E5%88%A0%E9%99%A4%E6%96%87%E4%BB%B6202206231947878.png" srcset="/img/loading.gif" lazyload><br>我用的是这个矩阵计算的网站用作伪装<br><code>https://github.com/staltz/matrixmultiplication.xyz.git</code></p>
-<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs awk">网站根目录下下载网站内容:<br>网站更根目录:<span class="hljs-regexp">/www/</span>wwwroot<span class="hljs-regexp">/你的域名/</span><br><br>git clone https:<span class="hljs-regexp">//gi</span>thub.com<span class="hljs-regexp">/staltz/m</span>atrixmultiplication.xyz.git<br>或者直接下载了手动用宝塔面板上传就行<br><br></code></pre></td></tr></table></figure>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs awk">网站根目录下下载网站内容:<br>网站根目录:<span class="hljs-regexp">/www/</span>wwwroot<span class="hljs-regexp">/你的域名/</span><br><br>git clone https:<span class="hljs-regexp">//gi</span>thub.com<span class="hljs-regexp">/staltz/m</span>atrixmultiplication.xyz.git<br>或者直接下载了手动用宝塔面板上传就行<br><br></code></pre></td></tr></table></figure>
 <p><img src="https://cdn.jsdelivr.net/gh/github-office/png-hub/img/page1/%E4%B8%8B%E8%BD%BD%E4%BA%86%E4%BC%AA%E8%A3%85%E7%BD%91%E7%AB%99202206231959713.png" srcset="/img/loading.gif" lazyload><br>把文件夹内的文件剪贴到网站根目录<br><img src="https://cdn.jsdelivr.net/gh/github-office/png-hub/img/page1/%E5%89%AA%E8%B4%B4202206232001703.png" srcset="/img/loading.gif" lazyload><br>刷新一下你的网站，至此完结撒花。</p>
 </li>
 </ol>
@@ -480,12 +446,6 @@
                 <div class="post-prevnext my-3">
                   <article class="post-prev col-6">
                     
-                    
-                      <a href="/2022/06/23/Welcome!%20(Desktop)/5.%20Joplin%20Privacy%20Policy/" title="">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile"></span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
                     
                   </article>
                   <article class="post-next col-6">
