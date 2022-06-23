@@ -16,24 +16,31 @@
   <meta name="author" content="战栗的乐章">
   <meta name="keywords" content="">
   
-    <meta name="description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+    <meta name="description" content="本文实现的效果：搭建一个alisi网盘，在alist网盘中上传种子，qBittorrent自动下载种子到alist网盘中，alist网盘可以在线观看刚才下载的种子。alist是一个强大却简约的网盘，出了能分享本地文件，还能挂在阿里、天翼、123、百度云、夸克、迅雷、FTP、SFTP…………更多功能请自行了解    安装docker123456wget -qO- get.docker.com | b">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hello World">
-<meta property="og:url" content="http://example.com/2022/06/22/hello-world/index.html">
+<meta property="og:title" content="docker安装qBittorrent下载器+alist实现自动下载种子和在线观看">
+<meta property="og:url" content="http://example.com/2022/06/23/docker%E5%AE%89%E8%A3%85qb%E4%B8%8B%E8%BD%BD%E5%99%A8-alist%E5%AE%9E%E7%8E%B0%E8%87%AA%E5%8A%A8%E4%B8%8B%E8%BD%BD%E4%B8%AD%E7%A7%8D%E5%AD%90%E5%92%8C%E5%9C%A8%E7%BA%BF%E8%A7%82%E7%9C%8Bpwd/index.html">
 <meta property="og:site_name" content="我的笔记本">
-<meta property="og:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+<meta property="og:description" content="本文实现的效果：搭建一个alisi网盘，在alist网盘中上传种子，qBittorrent自动下载种子到alist网盘中，alist网盘可以在线观看刚才下载的种子。alist是一个强大却简约的网盘，出了能分享本地文件，还能挂在阿里、天翼、123、百度云、夸克、迅雷、FTP、SFTP…………更多功能请自行了解    安装docker123456wget -qO- get.docker.com | b">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2022-06-22T11:34:46.774Z">
-<meta property="article:modified_time" content="2022-06-22T11:34:46.774Z">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/github-office/png-hub/img/page2/%E9%A6%96%E9%A1%B5%E6%95%88%E6%9E%9C%E5%9B%BE202206232216515.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/github-office/png-hub/img/page2/qb202206232227947.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/github-office/png-hub/img/page2/alist%E7%BD%91%E7%9B%98%E5%A5%BD%E4%BA%86202206232255250.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/github-office/png-hub/img/page1/%E8%AF%81%E4%B9%A6%E7%94%B3%E8%AF%B7-202206231913912.jpg">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/github-office/png-hub/img/page2/alist%E5%8F%8D%E4%BB%A3202206232319532.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/github-office/png-hub/img/page2/%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86%E9%85%8D%E7%BD%AE202206232320780.png">
+<meta property="article:published_time" content="2022-06-23T13:53:12.000Z">
+<meta property="article:modified_time" content="2022-06-23T15:54:56.852Z">
 <meta property="article:author" content="战栗的乐章">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/github-office/png-hub/img/page2/%E9%A6%96%E9%A1%B5%E6%95%88%E6%9E%9C%E5%9B%BE202206232216515.png">
 <meta name="twitter:creator" content="@WhiteHouse45">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>Hello World - 我的笔记本</title>
+  <title>docker安装qBittorrent下载器+alist实现自动下载种子和在线观看 - 我的笔记本</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -238,7 +245,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="Hello World"></span>
+            <span id="subtitle" data-typed-text="docker安装qBittorrent下载器+alist实现自动下载种子和在线观看"></span>
           
         </div>
 
@@ -249,8 +256,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2022-06-22 19:34" pubdate>
-          2022年6月22日 晚上
+        <time datetime="2022-06-23 21:53" pubdate>
+          2022年6月23日 晚上
         </time>
       </span>
     
@@ -261,7 +268,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          367 字
+          2.1k 字
         
       </span>
     
@@ -272,7 +279,7 @@
         
         
         
-          4 分钟
+          18 分钟
         
       </span>
     
@@ -310,24 +317,40 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">Hello World</h1>
+            <h1 style="display: none">docker安装qBittorrent下载器+alist实现自动下载种子和在线观看</h1>
             
             
               <div class="markdown-body">
                 
-                <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ hexo new <span class="hljs-string">&quot;My New Post&quot;</span><br></code></pre></td></tr></table></figure>
+                <h3 id="本文实现的效果："><a href="#本文实现的效果：" class="headerlink" title="本文实现的效果："></a>本文实现的效果：</h3><p>搭建一个alisi网盘，在alist网盘中上传种子，qBittorrent自动下载种子到alist网盘中，alist网盘可以在线观看刚才下载的种子。alist是一个强大却简约的网盘，出了能分享本地文件，还能挂在阿里、天翼、123、百度云、夸克、迅雷、FTP、SFTP…………更多功能<a target="_blank" rel="noopener" href="https://github.com/alist-org/alist">请自行了解</a></p>
+<p><img src="https://cdn.jsdelivr.net/gh/github-office/png-hub/img/page2/%E9%A6%96%E9%A1%B5%E6%95%88%E6%9E%9C%E5%9B%BE202206232216515.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="https://cdn.jsdelivr.net/gh/github-office/png-hub/img/page2/qb202206232227947.png" srcset="/img/loading.gif" lazyload></p>
+<hr>
+<h3 id="安装docker"><a href="#安装docker" class="headerlink" title="安装docker"></a>安装docker</h3><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs awk">wget -qO- get.docker.com | bash<br>wget -qO- https:<span class="hljs-regexp">//g</span>et.docker.com | bash -s docker --mirror Aliyun <span class="hljs-comment">##国内阿里云镜像安装</span><br>docker -v <span class="hljs-comment">##docker查看版本，确实是否安装成功</span><br>systemctl enable docker  <span class="hljs-comment">##开启启动docker</span><br>sudo curl -L <span class="hljs-string">&quot;https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)&quot;</span> -o <span class="hljs-regexp">/usr/</span>local<span class="hljs-regexp">/bin/</span>docker-compose  <span class="hljs-comment">##安装docker-compose</span><br>docker-compose --version 查看docker-compose版本<br></code></pre></td></tr></table></figure>
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ hexo server<br></code></pre></td></tr></table></figure>
+<hr>
+<h3 id="搭建alist网盘"><a href="#搭建alist网盘" class="headerlink" title="搭建alist网盘"></a>搭建alist网盘</h3><h4 id="docker安装alist"><a href="#docker安装alist" class="headerlink" title="docker安装alist"></a>docker安装alist</h4><p>根据<a target="_blank" rel="noopener" href="https://alist-doc.nn.ci/docs/install/docker">官方文档</a>，docker安装稳定版alist，其中一定要自定义好本机的映射路径，这个路径也会是qBittorrent的监听和下载路径。</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs awk">docker run -d --restart=always -v <span class="hljs-regexp">/etc/</span>alist:<span class="hljs-regexp">/opt/</span>alist<span class="hljs-regexp">/data -p 5244:5244 --name=&quot;alist&quot; xhofe/</span>alist:latest<br>docker exec -it alist ./alist -password <span class="hljs-comment">##查看默认密码</span><br></code></pre></td></tr></table></figure>
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ hexo generate<br></code></pre></td></tr></table></figure>
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ hexo deploy<br></code></pre></td></tr></table></figure>
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+<p>浏览输入 IP:5244，打开alist，输入默认密码，修改标题和announcement，其他根据需要修改。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/github-office/png-hub/img/page2/alist%E7%BD%91%E7%9B%98%E5%A5%BD%E4%BA%86202206232255250.png" srcset="/img/loading.gif" lazyload></p>
+<h4 id="alist共享本地文件"><a href="#alist共享本地文件" class="headerlink" title="alist共享本地文件"></a>alist共享本地文件</h4><p>现在本地<code>/etc/alist</code>目录下新建<code>date</code>文件夹,然后共享新建的<code>date</code>文件：左侧菜单，账号&gt;添加。注意，此时<code>/etc/alist/date</code>目录对应的是alist镜像内部的<code>/opt/alist/data/date</code>文件夹，要捋清楚关系。</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs awk">类型：本地<br>虚拟路径：/<br>跟目录路径：<span class="hljs-regexp">/opt/</span>alist<span class="hljs-regexp">/data/</span>date  <span class="hljs-comment">#不再解释为什么是这个路径</span><br></code></pre></td></tr></table></figure>
+
+<h4 id="Nginx反向代理，实现https-访问"><a href="#Nginx反向代理，实现https-访问" class="headerlink" title="Nginx反向代理，实现https:访问"></a>Nginx反向代理，实现https:访问</h4><p>宝塔面板新建网站，申请SSL证书，设置中添加反向代理：<br><img src="https://cdn.jsdelivr.net/gh/github-office/png-hub/img/page1/%E8%AF%81%E4%B9%A6%E7%94%B3%E8%AF%B7-202206231913912.jpg" srcset="/img/loading.gif" lazyload></p>
+<p><img src="https://cdn.jsdelivr.net/gh/github-office/png-hub/img/page2/alist%E5%8F%8D%E4%BB%A3202206232319532.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="https://cdn.jsdelivr.net/gh/github-office/png-hub/img/page2/%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86%E9%85%8D%E7%BD%AE202206232320780.png" srcset="/img/loading.gif" lazyload><br>编辑反向代理文件，全部删除原有配置，复制如下内容：</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs nginx"><span class="hljs-section">location</span> / &#123;<br>    <span class="hljs-attribute">proxy_set_header</span> X-Forwarded-For <span class="hljs-variable">$proxy_add_x_forwarded_for</span>;<br>    <span class="hljs-attribute">proxy_set_header</span> Host <span class="hljs-variable">$http_host</span>;<br>    <span class="hljs-attribute">proxy_set_header</span> X-Real-IP <span class="hljs-variable">$remote_addr</span>;<br>    <span class="hljs-attribute">proxy_set_header</span> Range <span class="hljs-variable">$http_range</span>;<br>    <span class="hljs-attribute">proxy_set_header</span> If-Range <span class="hljs-variable">$http_if_range</span>;<br>    <span class="hljs-attribute">proxy_redirect</span> <span class="hljs-literal">off</span>;<br>    <span class="hljs-attribute">proxy_pass</span> http://127.0.0.1:5244;<br>    <span class="hljs-comment"># 上传的最大文件尺寸</span><br>    <span class="hljs-attribute">client_max_body_size</span> <span class="hljs-number">20000m</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>此时已经可以通过 <code>https://域名:5244</code> 访问alist了</p>
+<hr>
+<h3 id="安装qBittorrent"><a href="#安装qBittorrent" class="headerlink" title="安装qBittorrent"></a>安装qBittorrent</h3><figure class="highlight livescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs livescript">docker run --name=qb <span class="hljs-string">\</span><br>  --network host -d <span class="hljs-string">\</span><br>  -e WEBUI_PORT=<span class="hljs-number">18080</span> <span class="hljs-string">\</span><br>  -p <span class="hljs-number">8080</span>:<span class="hljs-number">8080</span> <span class="hljs-string">\</span><br>  -p <span class="hljs-number">6881</span>:<span class="hljs-number">6881</span> <span class="hljs-string">\</span><br>  -p <span class="hljs-number">6881</span>:<span class="hljs-number">6881</span>/udp <span class="hljs-string">\</span><br>  -e TZ=<span class="hljs-string">&quot;Asia/Shanghai&quot;</span> <span class="hljs-string">\</span><br>  -v /etc/alist/date:/downloads <span class="hljs-string">\</span>  <span class="hljs-comment">##这里和alist的date目录相同</span><br>  -v /root/qb-conf:/config <span class="hljs-string">\</span>  <span class="hljs-comment">##这个目录自定义</span><br>  --restart <span class="hljs-keyword">unless</span>-stopped <span class="hljs-string">\</span><br>  linuxserver/qbittorrent<br></code></pre></td></tr></table></figure>
+<p>ip:18080 访问qb，在设置的webUI选项中&gt;&gt;切换中切换中文；验证出修改密码（千万不要用默认的密码，我进入过好多人的qb后台，都是因为他们用的是默认密码）</p>
+<p>连接选项中&gt;&gt;监听端口点击随机，默认的端口PT站都是封禁的，自动从此处添加 torrent，监控文件夹填写<code>/downloads/</code></p>
+<p>webUI选项中&gt;&gt;使用 HTTPS 而不是 HTTP，需要提前把宝塔申请的证书复制到<code>/root/qb-conf</code>目录下，对应填入如下：</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs awk">证书：<span class="hljs-regexp">/config/</span>fullchain.pem<br>密钥：<span class="hljs-regexp">/config/</span>privkey.pem<br></code></pre></td></tr></table></figure>
+<p>保存之后就可以通过 https:&#x2F;&#x2F;域名:18080访问qb了，此时在alist界面，上传bt种子就会被qb自动下载。</p>
 
                 
               </div>
@@ -345,8 +368,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>Hello World</div>
-      <div>http://example.com/2022/06/22/hello-world/</div>
+      <div>docker安装qBittorrent下载器+alist实现自动下载种子和在线观看</div>
+      <div>http://example.com/2022/06/23/docker安装qb下载器-alist实现自动下载中种子和在线观看pwd/</div>
     </div>
     <div class="license-meta">
       
@@ -358,7 +381,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2022年6月22日</div>
+          <div>2022年6月23日</div>
         </div>
       
       
@@ -388,15 +411,15 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2022/06/23/MD%E8%AF%AD%E6%B3%95%E5%AD%A6%E4%B9%A0%E6%96%87%E6%A1%A3/" title="MD语法学习">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">MD语法学习</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
+                    
+                      <a href="/2022/06/23/Air-Universe%E5%90%8E%E7%AB%AF%E5%AF%B9%E6%8E%A5V2borad%E9%9D%A2%E6%9D%BF/" title="Air-Universe后端对接V2borad面板">
+                        <span class="hidden-mobile">Air-Universe后端对接V2borad面板</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
                     
                   </article>
                 </div>
